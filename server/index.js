@@ -7,9 +7,8 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client/dist'));
 
 app.get('/grocery', (req,res)=>{
-  var items = req.body;
-  console.log(items);
-
+  console.log('retrieving')
+  grocery.retrieve(res);
 });
 
 app.post('/grocery',(req,res)=>{
