@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import AddGrocery from './components/AddGrocery.jsx';
+import GroceryList from './components/GroceryList.jsx';
+import $ from 'jquery'
 
 class App extends React.Component {
   constructor(props) {
@@ -14,9 +17,28 @@ class App extends React.Component {
     }
   }
 
+  send(item,quantity){
+    $.ajax({
+      url:'/grocery',
+      method:'POST',
+      data: JSON.stringify({item:item, quantity:quantity}),
+      contentType: 'application/json',
+      success: (data)=>{
+        console.log('Grocery Item sent successfully',data);
+      },
+      error: (data)=>{
+        console.log('Error! No item was sent!', data);
+      }
+
+    });
+  }
+
   
   render () {
-    return null;
+    return (<div>
+             <AddGrocery send={this.send.bind(this)}/>
+             <GroceryList list={this.state.list}/>
+            </div>);
   }
 }
 
